@@ -57,25 +57,93 @@ public class Livraria {
                 System.out.println("Digite o ID do usuário");
                 String id = sc.nextLine();
                 Usuario usuario = new Usuario(nome, id);
-                listaDeUsuariosCadastrados.add(usuario);
+                registrarUsuario(usuario);
                 System.out.println("Usuário cadastrado com sucesso!");
                 break;
             case 4:
                 System.out.println("Qual o titulo do livro que será emprestado?");
-                String tituloLivro = sc.nextLine();
+                titulo = sc.nextLine();
                 System.out.println("Qual o autor do livro que será emprestado?");
-                String autorLivro = sc.nextLine();
-                System.out.println("Qual o autor do livro que será emprestado?");
-                String dataLivro = sc.nextLine();
+                autor = sc.nextLine();
+                System.out.println("Qual a data do livro que será emprestado?");
+                data = sc.nextLine();
                 System.out.println("Para qual usuário o livro será emprestado?");
-                String usuarioEmprestar = sc.nextLine();
+                nome = sc.nextLine();
                 System.out.println("Para qual o ID do usuário?");
-                String idUsuario = sc.nextLine();
+                id = sc.nextLine();
 
-                Livro livroTeste = new Livro(tituloLivro, autorLivro, dataLivro);
+                Livro livroTeste = new Livro(titulo, autor, data);
+                Usuario usuarioTeste = new Usuario(nome, id);
 
-                for(Livro percorrer : exibirLivrosDisponiveis())
-                if(livroTeste.autor.equals(livroTeste))
+                for(Livro percorrer : listaDeLivrosCadastrados){
+                    if(percorrer.autor.equals(autor) && percorrer.titulo.equals(titulo)){
+                        for(Usuario percorrer2 : exibirListaDeUsuarios()){
+                            if(percorrer2.nome.equals(nome) && percorrer2.id.equals(id)){
+                                emprestarLivro(usuarioTeste, livroTeste);
+                                System.out.println("Livro emprestado com sucesso!");
+                            }else{
+                                System.out.println("Não foi possível encontrar este usuário :(");
+                            }
+                        }
+                    }else{
+                        System.out.println("Não foi possivel encontrar este livro :(");
+                    }
+                }
+                    break;
+                case 5:
+                    System.out.println("Qual o nome do usuario que irá devoler o livro?");
+                    nome = sc.nextLine();
+                    System.out.println("Qual o id do usuário que irá devolver o livro");
+                    id = sc.nextLine();
+                    System.out.println("Qual o titulo do livro a ser devolvido?");
+                    titulo = sc.nextLine();
+                    System.out.println("Qual o autor do livro a ser devolvido?");
+                    autor = sc.nextLine();
+                    System.out.println("Qual a data do livro a ser devolvido?");
+                    data = sc.nextLine();
+
+                    Livro livroTeste2 = new Livro(titulo, autor, data);
+                    Usuario usuarioTeste2 = new Usuario(nome, id);
+
+                    for(Usuario percorrerUsuario : listaDeUsuariosCadastrados){
+                        if(nome.equals(percorrerUsuario.nome) && id.equals(percorrerUsuario.id)){
+                            for(Livro percorreLivro : listaDeLivrosCadastrados){
+                                if(titulo.equals(percorreLivro.titulo) && autor.equals(percorreLivro.autor)){
+                                    devolverLivro(usuarioTeste2,livroTeste2);
+                                    System.out.println("Livro devolvido :D");
+                                }else{
+                                    System.out.println("Livro não encontrado D:");
+                                }
+                            }
+                        }else{
+                            System.out.println(percorrerUsuario.nome + "Usuário não encontrado D:");
+                        }
+                    }
+                case 6:
+                    System.out.println("\n    Lista de Livros: ");
+                    exibirListaDeLivros();
+                    break;
+                case 7:
+                    System.out.println("\n    Lista de Usuários: ");
+                    exibirListaDeUsuarios();
+                    break;
+                case 8:
+                System.out.println("Qual o nome do usuario?");
+                nome = sc.nextLine();
+                System.out.println("Qual o id do usuário?");
+                id = sc.nextLine();
+
+                for(Usuario usuarioTeste3 : listaDeUsuariosCadastrados){
+                    if(nome.equals(usuarioTeste3.nome) && id.equals(usuarioTeste3.id)){
+                        exibirlistaDeLivrosDoUsuario(usuarioTeste3);
+                    }else{
+                        System.out.println("Usuario não encontrado D:");
+                    }
+                }
+                    break;
+                    
+                case 9:
+                 exibirLivrosDisponiveis();
                 
                    
 
@@ -104,7 +172,6 @@ public class Livraria {
         if (livro.statusLivro == true) {
             usuario.listaDeLivrosDoUsuario.add(livro);
             livro.mudarStatus();
-            System.out.println("Livro emprestado á " + usuario.nome + ":D");
         } else {
             System.out.println("O livro está indisponivel para empréstimo");
         }
@@ -120,13 +187,13 @@ public class Livraria {
     }
 
     public ArrayList<Livro> exibirListaDeLivros() {
-        System.out.println("\n    Lista de Livros: ");
+        
         listaDeLivrosCadastrados.forEach(System.out::println);
         return listaDeLivrosCadastrados;
     }
 
     public ArrayList<Usuario> exibirListaDeUsuarios() {
-        System.out.println("\n    Lista de Usuários: ");
+        
         listaDeUsuariosCadastrados.forEach(System.out::println);
         return listaDeUsuariosCadastrados;
     }
@@ -137,7 +204,7 @@ public class Livraria {
     }
 
     public ArrayList<Livro> exibirLivrosDisponiveis() {
-        System.out.println("    Livros disponíveis: ");
+        
         listaDeLivrosCadastrados.stream().filter(a -> a.statusLivro == true).map(a -> "____________________"
                 + "\nLivro: " + a.titulo
                 + "\nAutor: " + a.autor).forEach(System.out::println);

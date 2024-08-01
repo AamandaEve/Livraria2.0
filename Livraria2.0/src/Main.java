@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -7,7 +7,6 @@ public class Main {
         //Usuario usuario1 = new Usuario("Amanda", "40028922");
         //Usuario usuario2 = new Usuario("Evellin", "80809090");
         Livraria livraria = new Livraria();
-
         livraria.funcionamento();
         
 
