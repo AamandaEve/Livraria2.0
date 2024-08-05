@@ -26,9 +26,11 @@ public class Usuario {
 
     public void emprestarLivro(Livro livro){
         listaDeLivrosDoUsuario.add(livro);
+        livro.mudarStatus();
     }
     public void devolverLivro(Livro livro){
         listaDeLivrosDoUsuario.remove(livro);
+        livro.mudarStatus();
     }
     
     public void exibirInformacoesUsuario(){
